@@ -48,7 +48,7 @@ public class CorsoDiStudiServlet extends HttpServlet {
           + "                <div class='collapse navbar-collapse' id='navigazione'>\n"
           + "                    <ul class='nav navbar-nav'>\n"
           + "                        <li><a class='$$professori$$' href='professori'>Professori</a></li>\n"
-          + "                        <li><a class='$$studenti$$' href='#'>Studenti</a></li>\n"
+          + "                        <li><a class='$$studenti$$' href='studenti'>Studenti</a></li>\n"
           + "                        <li><a class='$$orari$$' href='#'>Orari</a></li>\n"
           + "                        <li><a class='$$calendario$$' href='#'>Calendario</a></li>\n"
           + "                        <li class='$$dropdownmaterie$$' class='dropdown'>\n"

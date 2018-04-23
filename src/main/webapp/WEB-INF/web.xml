@@ -4,9 +4,18 @@
         <servlet-name>ProfessoriServlet</servlet-name>
         <servlet-class>org.forit.corsoDiStudi.servlet.ProfessoriServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>StudentiServlet</servlet-name>
+        <servlet-class>org.forit.corsoDiStudi.servlet.StudentiServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProfessoriServlet</servlet-name>
         <url-pattern>/professori</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>StudentiServlet</servlet-name>
+        <url-pattern>/studenti</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

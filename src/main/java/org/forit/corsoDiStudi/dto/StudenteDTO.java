@@ -5,131 +5,142 @@
  */
 package org.forit.corsoDiStudi.dto;
 
-/**
- *
- * @author Utente
- */
+import java.time.LocalDate;
+import java.util.Objects;
+
 public class StudenteDTO {
+    private long id;
+    private String nome, cognome;
+    private LocalDate dataNascita;
+    private String codiceFiscale;
+    private String matricola;
+    private String mail;
 
-  private long id;
-  private String nome, cognome, dataNascita, email, cf, matricola, tasse, classe;
-
-  public StudenteDTO() {
-  }
-
-  public StudenteDTO(long id, String nome, String cognome, String dataNascita, String email, String cf, String matricola, String tasse, String classe) {
-    this.id = id;
-    this.nome = nome;
-    this.cognome = cognome;
-    this.dataNascita = dataNascita;
-    this.email = email;
-    this.cf = cf;
-    this.matricola = matricola;
-    this.tasse = tasse;
-    this.classe = classe;
-  }
-
-  public long getId() {
-    return id;
-  }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-  public String getCognome() {
-    return cognome;
-  }
-
-  public void setCognome(String cognome) {
-    this.cognome = cognome;
-  }
-
-  public String getDataNascita() {
-    return dataNascita;
-  }
-
-  public void setDataNascita(String dataNascita) {
-    this.dataNascita = dataNascita;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getCf() {
-    return cf;
-  }
-
-  public void setCf(String cf) {
-    this.cf = cf;
-  }
-
-  public String getMatricola() {
-    return matricola;
-  }
-
-  public void setMatricola(String matricola) {
-    this.matricola = matricola;
-  }
-
-  public String getTasse() {
-    return tasse;
-  }
-
-  public void setTasse(String tasse) {
-    this.tasse = tasse;
-  }
-
-  public String getClasse() {
-    return classe;
-  }
-
-  public void setClasse(String classe) {
-    this.classe = classe;
-  }
-
-  @Override
-  public int hashCode() {
-    int hash = 3;
-    hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
-    return hash;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
+    public StudenteDTO() {
     }
-    if (obj == null) {
-      return false;
-    }
-    if (getClass() != obj.getClass()) {
-      return false;
-    }
-    final StudenteDTO other = (StudenteDTO) obj;
-    if (this.id != other.id) {
-      return false;
-    }
-    return true;
-  }
 
-  @Override
-  public String toString() {
-    return "StudenteDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", email=" + email + ", cf=" + cf + ", matricola=" + matricola + ", tasse=" + tasse + ", classe=" + classe + '}';
-  }
-  
-  
+    public StudenteDTO(long id, String nome, String cognome, LocalDate dataNascita, String codiceFiscale, String matricola, String mail) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataNascita = dataNascita;
+        this.codiceFiscale = codiceFiscale;
+        this.matricola = matricola;
+        this.mail = mail;
+    }
+
+    public StudenteDTO(long id, String nome, String cognome, LocalDate dataNascita, String codiceFiscale, String mail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
+    public LocalDate getDataNascita() {
+        return dataNascita;
+    }
+
+    public void setDataNascita(LocalDate dataNascita) {
+        this.dataNascita = dataNascita;
+    }
+
+    public String getCodiceFiscale() {
+        return codiceFiscale;
+    }
+
+    public void setCodiceFiscale(String codiceFiscale) {
+        this.codiceFiscale = codiceFiscale;
+    }
+
+    public String getMatricola() {
+        return matricola;
+    }
+
+    public void setMatricola(String matricola) {
+        this.matricola = matricola;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 23 * hash + Objects.hashCode(this.nome);
+        hash = 23 * hash + Objects.hashCode(this.cognome);
+        hash = 23 * hash + Objects.hashCode(this.dataNascita);
+        hash = 23 * hash + Objects.hashCode(this.codiceFiscale);
+        hash = 23 * hash + Objects.hashCode(this.matricola);
+        hash = 23 * hash + Objects.hashCode(this.mail);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StudenteDTO other = (StudenteDTO) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.cognome, other.cognome)) {
+            return false;
+        }
+        if (!Objects.equals(this.codiceFiscale, other.codiceFiscale)) {
+            return false;
+        }
+        if (!Objects.equals(this.matricola, other.matricola)) {
+            return false;
+        }
+        if (!Objects.equals(this.mail, other.mail)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataNascita, other.dataNascita)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentiDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", mail=" + mail + '}';
+    }
+
 }
