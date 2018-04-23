@@ -59,7 +59,7 @@ public class CorsoDiStudiServlet extends HttpServlet {
           + "                                <li><a href='#'>Algoritmi</a></li>\n"
           + "                            </ul>\n"
           + "                        </li>\n"
-          + "                        <li><a class='$$tasse$$' href='#'>Tasse</a></li> \n"
+          + "                        <li><a class='$$tasse$$' href='tasse'>Tasse</a></li> \n"
           + "                        <li><a class='$$contatti$$' href='#'>Contatti</a></li>                         \n"
           + "                    </ul>                                        \n"
           + "                </div>\n"

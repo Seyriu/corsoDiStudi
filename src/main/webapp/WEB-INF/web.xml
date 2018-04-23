@@ -8,9 +8,17 @@
         <servlet-name>StudentiServlet</servlet-name>
         <servlet-class>org.forit.corsoDiStudi.servlet.StudentiServlet</servlet-class>
     </servlet>
+        <servlet>
+        <servlet-name>TasseServlet</servlet-name>
+        <servlet-class>org.forit.corsoDiStudi.servlet.TasseServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProfessoriServlet</servlet-name>
         <url-pattern>/professori</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TasseServlet</servlet-name>
+        <url-pattern>/tasse</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>

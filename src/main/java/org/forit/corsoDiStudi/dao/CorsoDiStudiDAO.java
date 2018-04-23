@@ -59,7 +59,7 @@ public class CorsoDiStudiDAO {
             = "SELECT "
             + "    t.* "
             + "FROM "
-            + "    tasse t ";
+            + "    tassa t ";
 
     static {
         try {
