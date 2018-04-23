@@ -13,8 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import org.forit.corsoDiStudi.dto.ProfessoreDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;
 
@@ -27,13 +30,22 @@ public class CorsoDiStudiDAO {
   private static final String DB_URL = "jdbc:mysql://localhost:3306/corsodistudi?user=forit&password=12345&useSSL=false";
   private static final String INSERT_VOTO = "insert into voto values (null,?, ?, ?, ?, ?)";
   private static final String INSERT_VXP = "insert into voto_x_prof values (?, ?);";
-  private static final String STUDENTS_N_BY_CLASS = 
-          "SELECT c.NOME, count(*) N_ALUNNI "
+  private static final String STUDENTS_N_BY_CLASS
+          = "SELECT c.NOME, count(*) N_ALUNNI "
           + "FROM studente s, classe c "
           + "where s.ID_CLASSE=c.ID "
           + "group by c.NOME "
           + "order by c.NOME";
+  private static final String GETPROFESSORI = "SELECT * FROM corsodistudi.professore;";
 
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
+  
   public void insertVoto(int valutazione, LocalDate dataVoto, int idSemestre, int idMateria, int idStudente, int idProf) throws CDSException {
     try (Connection conn = DriverManager.getConnection(DB_URL)) {
       conn.setAutoCommit(false);
@@ -64,8 +76,8 @@ public class CorsoDiStudiDAO {
       throw new CDSException(ex);
     }
   }
-  
-    public void insertVoto(VotoDTO voto) throws CDSException {
+
+  public void insertVoto(VotoDTO voto) throws CDSException {
     try (Connection conn = DriverManager.getConnection(DB_URL)) {
       conn.setAutoCommit(false);
       try (
@@ -95,7 +107,7 @@ public class CorsoDiStudiDAO {
       throw new CDSException(ex);
     }
   }
-  
+
   public Map<String, Integer> getStudentsInEachClass() throws CDSException {
     try (
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -107,6 +119,28 @@ public class CorsoDiStudiDAO {
         studentsInEachClass.put(rs.getString("NOME"), rs.getInt("N_ALUNNI"));
       }
       return studentsInEachClass;
+    } catch (SQLException ex) {
+      System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public List<ProfessoreDTO> getListaProfessori() throws CDSException {
+    try (
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(GETPROFESSORI)) {
+
+      List<ProfessoreDTO> professori = new ArrayList<>();
+      while (rs.next()) {
+        professori.add(new ProfessoreDTO(
+                rs.getString("NOME"),
+                rs.getString("COGNOME"),
+                rs.getString("MAIL"),
+                rs.getLong("ID"))
+        );
+      }
+      return professori;
     } catch (SQLException ex) {
       System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
       throw new CDSException(ex);
