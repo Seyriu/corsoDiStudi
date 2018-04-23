@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.forit.corsoDiStudi.dto.ProfessoreDTO;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
+import org.forit.corsoDiStudi.dto.TasseDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;
 
@@ -53,6 +54,12 @@ public class CorsoDiStudiDAO {
     private static final String MATERIA_X_PROFESSORE = "SELECT P.NOME,P.COGNOME,M.NOME MATERIA "
             + "FROM materia m,materia_x_prof mxp,professore P "
             + " where m.id=mxp.ID_MATERIA and mxp.ID_PROF=P.ID ";
+    
+    private static final String LISTA_TASSE
+            = "SELECT "
+            + "    t.* "
+            + "FROM "
+            + "    tasse t ";
 
     static {
         try {
@@ -215,5 +222,28 @@ public class CorsoDiStudiDAO {
             throw new CDSException(ex);
         }
     }
+      public List<TasseDTO> getListaTasse() throws CDSException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(LISTA_TASSE)) {
+
+            List<TasseDTO> listaTasse = new ArrayList<>();
+
+            while (rs.next()) {
+                long id = rs.getLong("ID");
+                String isee = rs.getString("ISEE");
+                String costo = rs.getString("COSTO");
+             
+
+                TasseDTO tassa = new TasseDTO(id, isee, costo);
+                listaTasse.add(tassa);
+
+            }
+            return listaTasse;
+        } catch (SQLException ex) {
+            System.out.println("Si e' verificato un errore " + ex.getMessage());
+            throw new CDSException(ex);
+        }
+      }
 
 }
