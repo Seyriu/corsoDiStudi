@@ -1,10 +1,109 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
+        <title>Corso Di Studi</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+        <link rel="icon" href="./img/cds_s.png">
+
+        <style type="text/css">
+            .navbar-default {
+                background-color: #eddead;
+                border-color: #E7E7E7;
+            }
+
+            .jumbotron {
+                /*                height: 300px;*/
+            }
+
+            #award {
+                background-image:url('./img/award.jpg');
+                background-repeat: no-repeat;
+                background-position: center center; 
+                background-size: cover;
+                /*                filter: saturate(0.2);*/
+            }
+
+            #uni {
+                background-image:url('./img/uni.jpg');
+                background-repeat: no-repeat;
+                background-position: center center; 
+                background-size: cover;
+                /*                filter: saturate(0.2);*/
+            }
+
+            .whiteBg {
+                background-color: rgba(255, 255, 255, 0.9);
+                padding: 10px;
+                border-radius: 5px;
+                /*                height: 200px;*/
+            }
+            
+            @media only screen and (min-width: 992px) {
+                .aligner {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        </style>
     </head>
-    <body>
-        <h1>Hello World!</h1>
+    <body>    
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img alt="CorsoDiStudi" src="./img/cds_s.png" width="20">
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Professori</a></li>
+                        <li><a href="#">Studenti</a></li>
+                        <li><a href="#">Orari</a></li>
+                        <li><a href="#">Calendario</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Materie <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Calcolo</a></li>
+                                <li><a href="#">Architettura</a></li>
+                                <li><a href="#">Algoritmi</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Tasse</a></li>                        
+                    </ul>                                        
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row aligner">
+                <div class="col-md-4">
+                    <div class="jumbotron" id="award">
+                        <div class="whiteBg">
+                            <p class="">Terzo classificato alle olimpiadi informatiche 2018 grazie alla stupenda performance dei nostri studenti del terzo anno!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <img src="./img/cds.png" alt="CorsoDiStudi" class="img-responsive" style="margin:0 auto" width="300"/>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="jumbotron" id="uni">
+                        <div class="whiteBg">
+                            <p>Pi&ugrave; di quarant'anni di storia nell'insegnamento universitario. Una garanzia di successo!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
