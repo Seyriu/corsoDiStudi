@@ -91,7 +91,7 @@ public class TasseServlet extends CorsoDiStudiServlet {
             out.println("    </a>");
             out.println("  </td>");
             out.println("  <td>" + tassa.getIsee() + "</td>");
-            out.println("  <td>" + tassa.getCosto() + "</td>");
+            out.println("  <td>" + tassa.getCosto() + " &euro;</td>");
             out.println("</tr>");
         });
         out.println("</tbody>");
