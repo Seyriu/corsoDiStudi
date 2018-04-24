@@ -6,6 +6,8 @@
 package org.forit.corsoDiStudi.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class StudenteDTO {
@@ -15,6 +17,9 @@ public class StudenteDTO {
     private String codiceFiscale;
     private String matricola;
     private String mail;
+    
+    private List<TasseDTO> tasse = new ArrayList<>();
+    private List<VotoDTO> voti = new ArrayList<>();
 
     public StudenteDTO() {
     }
@@ -89,6 +94,22 @@ public class StudenteDTO {
         this.mail = mail;
     }
 
+  public List<TasseDTO> getTasse() {
+    return tasse;
+  }
+
+  public void setTasse(List<TasseDTO> tasse) {
+    this.tasse = tasse;
+  }
+
+  public List<VotoDTO> getVoti() {
+    return voti;
+  }
+
+  public void setVoti(List<VotoDTO> voti) {
+    this.voti = voti;
+  }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -140,7 +161,7 @@ public class StudenteDTO {
 
     @Override
     public String toString() {
-        return "StudentiDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", mail=" + mail + '}';
+        return "StudentiDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", mail=" + mail + ", tasse=" + tasse + ", voti=" + voti + '}';
     }
 
 }

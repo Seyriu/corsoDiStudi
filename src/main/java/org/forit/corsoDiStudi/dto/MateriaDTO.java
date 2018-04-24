@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.forit.corsoDiStudiDTO;
+package org.forit.corsoDiStudi.dto;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  *
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class MateriaDTO {
     private long id;
-    private String nome, cognome;
+    private String nome;
 
     public MateriaDTO() {
     }
@@ -22,7 +21,6 @@ public class MateriaDTO {
     public MateriaDTO(long id, String nome, String cognome) {
         this.id = id;
         this.nome = nome;
-        this.cognome = cognome;
     }
 
     public long getId() {
@@ -41,50 +39,40 @@ public class MateriaDTO {
         this.nome = nome;
     }
 
-    public String getCognome() {
-        return cognome;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 23 * hash + (int) (this.id ^ (this.id >>> 32));
+    hash = 23 * hash + Objects.hashCode(this.nome);
+    return hash;
+  }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final MateriaDTO other = (MateriaDTO) obj;
+    if (this.id != other.id) {
+      return false;
+    }
+    if (!Objects.equals(this.nome, other.nome)) {
+      return false;
+    }
+    return true;
+  }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 53 * hash + Objects.hashCode(this.nome);
-        hash = 53 * hash + Objects.hashCode(this.cognome);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final MateriaDTO other = (MateriaDTO) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.cognome, other.cognome)) {
-            return false;
-        }
-        return true;
-    }
+    
 
     @Override
     public String toString() {
-        return "MateriaDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + '}';
+        return "MateriaDTO{" + "id=" + id + ", nome=" + nome +  '}';
     }
  
     
