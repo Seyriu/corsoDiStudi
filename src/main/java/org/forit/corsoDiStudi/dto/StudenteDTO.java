@@ -34,10 +34,6 @@ public class StudenteDTO {
         this.mail = mail;
     }
 
-    public StudenteDTO(long id, String nome, String cognome, LocalDate dataNascita, String codiceFiscale, String mail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public long getId() {
         return id;
     }

@@ -76,7 +76,12 @@ public class CorsoDiStudiDAO {
           = "SELECT v.ID, v.VALUTAZIONE, V.DATA, m.NOME NOME_MATERIA, sm.SEMESTRE NOME_SEMESTRE, sm.ANNO ANNO_SEMESTRE \n"
           + "FROM studente s, voto v, materia m, semestre sm\n"
           + "WHERE s.ID=? and v.ID_STUDENTE=s.ID and m.ID=v.ID_MATERIA and sm.ID=v.ID_SEMESTRE";
-
+  
+  private static final String UPDATE_STUDENTE
+          = "update studente set "
+          + "nome=?, cognome=?, data_di_nascita = ?, codice_fiscale=?, matricola=?, mail=? "
+          + "where id=?";
+  
   static {
     try {
       Class.forName("com.mysql.jdbc.Driver");
@@ -155,6 +160,26 @@ public class CorsoDiStudiDAO {
     }
   }
 
+  public void updateStudente(StudenteDTO studente) throws CDSException {
+    try (Connection conn = DriverManager.getConnection(DB_URL);) {
+      try (PreparedStatement ps1 = conn.prepareStatement(UPDATE_STUDENTE)) {
+        ps1.setString(1, studente.getNome());
+        ps1.setString(2, studente.getCognome());
+        ps1.setDate(3, Date.valueOf(studente.getDataNascita()));
+        ps1.setString(4, studente.getCodiceFiscale());
+        ps1.setString(5, studente.getMatricola());
+        ps1.setString(6, studente.getMail());
+        ps1.setLong(7, studente.getId());
+        ps1.executeUpdate();
+      } catch (SQLException ex) {
+        throw ex;
+      }
+    } catch (SQLException ex) {
+      System.out.println("Si è verificato un errore " + ex.getMessage());
+      throw new CDSException(ex);
+    }
+  }
+  
   public List<StudenteDTO> getListaStudenti() throws CDSException {
     try (
             Connection conn = DriverManager.getConnection(DB_URL);
