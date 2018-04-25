@@ -35,6 +35,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
           + "        <th class='col-sm-2'>Data Di Nascita</th>"
           + "        <th class='col-sm-2'>Codice Fiscale</th>"
           + "        <th class='col-sm-3'>Email</th>"
+          + "        <th class='col-sm-1'>Matricola</th>"
           + "    </tr>"
           + "</thead>";
 
@@ -183,7 +184,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("</div>");
     out.println("<div class='col-sm-6'>");
     out.println("<label>Matricola</label>");
-    out.println("<input type='email' name='matricola' class='form-control' value='" + studente.getMatricola() + "'" + (disabled ? " disabled='disabled'" : "") + ">");
+    out.println("<input type='text' name='matricola' class='form-control' value='" + studente.getMatricola() + "'" + (disabled ? " disabled='disabled'" : "") + ">");
     out.println("</div>");
     out.println("</div>");
   }
@@ -219,11 +220,11 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("<table class='table'>");
     out.println(THEAD_VOTI);
     out.println("<tbody'>");
-    studente.getVoti().forEach(film -> {
+    studente.getVoti().forEach(voto -> {
       out.println("<tr>");
-      out.println("<td>" + film.getMateria()+ "</td>");
-      out.println("<td>" + film.getValutazione() + "/30</td>");
-      out.println("<td>" + film.getDataVoto().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</td>");
+      out.println("<td>" + voto.getMateria()+ "</td>");
+      out.println("<td>" + voto.getValutazione() + "/30</td>");
+      out.println("<td>" + voto.getDataVoto().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</td>");
       out.println("</tr>");
     });
     out.println("</tbody'>");
@@ -271,6 +272,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
       out.print("<td>" + studente.getDataNascita().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) + "</td >");
       out.print("<td>" + studente.getCodiceFiscale() + "</td >");
       out.println("  <td>" + studente.getMail() + "</td>");
+      out.println("  <td>" + studente.getMatricola()+ "</td>");
       out.println("</tr>");
     });
     out.println("</tbody>");

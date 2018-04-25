@@ -15,10 +15,10 @@ import org.junit.Test;
  */
 public class TestCorsoDiStudiDAO {
 
-  @Test
-  public void getStudente() throws CDSException {
-    CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
-    System.out.println(cdsDAO.getStudente(1));
-  }
+//  @Test
+//  public void getStudente() throws CDSException {
+//    CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
+//    System.out.println(cdsDAO.getStudente(1));
+//  }
 
 }

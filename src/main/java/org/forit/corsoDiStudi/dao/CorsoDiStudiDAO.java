@@ -30,7 +30,7 @@ import org.forit.corsoDiStudi.exceptions.CDSException;
  */
 public class CorsoDiStudiDAO {
 
-  private static final String DB_URL = "jdbc:mysql://localhost:3306/corsodistudi?user=forit&password=12345&useSSL=false";
+  private static final String DB_URL = "jdbc:mysql://localhost:3306/corsodistudi?user=root&password=12345&useSSL=false";
   private static final String INSERT_VOTO = "insert into voto values (null,?, ?, ?, ?, ?)";
   private static final String INSERT_VXP = "insert into voto_x_prof values (?, ?);";
   private static final String STUDENTS_N_BY_CLASS
