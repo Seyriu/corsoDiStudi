@@ -49,8 +49,8 @@ public class CorsoDiStudiDAO {
           + "ORDER BY COGNOME,NOME";
 
   public static final String INSERISCI_STUDENTE
-          = "INSERT INTO STUDENTE (NOME,COGNOME,DATA_DI_NASCITA,CODICE_FISCALE,MAIL,MATRICOLA,ID_CLASSE)"
-          + " VALUES(?,?,?,?,?,?,?)";
+          = "INSERT INTO STUDENTE (NOME,COGNOME,DATA_DI_NASCITA,CODICE_FISCALE,MAIL,MATRICOLA,ID_CLASSE,ID_TASSA)"
+          + " VALUES(?,?,?,?,?,?,?,?)";
 
   private static final String MATERIA_X_PROFESSORE = "SELECT P.NOME,P.COGNOME,M.NOME MATERIA "
           + "FROM materia m,materia_x_prof mxp,professore P "
@@ -205,7 +205,7 @@ public class CorsoDiStudiDAO {
     }
   }
 
-  public void insertStudente(String Nome, String cognome, LocalDate dataNascita, String codiceFiscale, String mail, String matricola, long idClasse) throws CDSException {
+  public void insertStudente(String Nome, String cognome, LocalDate dataNascita, String codiceFiscale, String mail, String matricola) throws CDSException {
 
     try (Connection conn = DriverManager.getConnection(DB_URL)) {
       conn.setAutoCommit(false);
@@ -217,11 +217,42 @@ public class CorsoDiStudiDAO {
         ps1.setString(4, codiceFiscale);
         ps1.setString(5, mail);
         ps1.setString(6, matricola);
-        ps1.setLong(7, idClasse);
+        ps1.setLong(7, -1);
+        ps1.setLong(8, -1);
         ps1.executeUpdate();
 
         conn.commit();
       } catch (SQLException ex) {
+        conn.rollback();
+        throw ex;
+      }
+
+    } catch (SQLException ex) {
+
+      System.out.println("Si è verificato un errore " + ex);
+      throw new CDSException(ex);
+    }
+  }
+  
+    public void insertStudente(StudenteDTO studente) throws CDSException {
+
+    try (Connection conn = DriverManager.getConnection(DB_URL)) {
+      conn.setAutoCommit(false);
+
+      try (PreparedStatement ps1 = conn.prepareStatement(INSERISCI_STUDENTE, Statement.RETURN_GENERATED_KEYS);) {
+        ps1.setString(1, studente.getNome());
+        ps1.setString(2, studente.getCognome());
+        ps1.setDate(3, Date.valueOf(studente.getDataNascita()));
+        ps1.setString(4, studente.getCodiceFiscale());
+        ps1.setString(5, studente.getMail());
+        ps1.setString(6, studente.getMatricola());
+        ps1.setLong(7, -1);
+        ps1.setLong(8, -1);
+        ps1.executeUpdate();
+
+        conn.commit();
+      } catch (SQLException ex) {
+        System.out.println("errore: " + ex.getLocalizedMessage());
         conn.rollback();
         throw ex;
       }

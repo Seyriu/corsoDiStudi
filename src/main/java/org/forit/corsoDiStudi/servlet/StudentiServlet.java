@@ -46,8 +46,8 @@ public class StudentiServlet extends CorsoDiStudiServlet {
           + "                                    <th class='col-sm-6'>Costo</th>\n"
           + "                                </tr>\n"
           + "                            </thead>";
-  
-    private static String THEAD_VOTI
+
+  private static String THEAD_VOTI
           = "                            <thead>\n"
           + "                                <tr>\n"
           + "                                    <th class='col-sm-6'>Materia</th>\n"
@@ -78,14 +78,22 @@ public class StudentiServlet extends CorsoDiStudiServlet {
 
     try {
       StudenteDTO studente = new StudenteDTO(id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
-        CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
-      cdsDAO.updateStudente(studente);
-      
-//      resp.sendRedirect("clienti"); oppure this.doGet()...
-      this.doGet(req, resp);
+      CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
+      if (id == -1) {
+        cdsDAO.insertStudente(studente);
+      } else {
+        cdsDAO.updateStudente(studente);
+      }
+
+//      resp.sendRedirect("studenti"); oppure this.doGet()...
+       this.doGet(req, resp);
     } catch (CDSException ex) {
       System.out.println("Si e' verificato un errore " + ex.getLocalizedMessage());
-      resp.sendRedirect("clienti?ID=" + id + "&action=edit");
+      if (id == -1) {
+        resp.sendRedirect("studenti?action=new");
+      } else {
+        resp.sendRedirect("studenti?ID=" + id + "&action=edit");
+      }
     }
   }
 
@@ -105,6 +113,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
           this.dettaglioStudente(resp, Long.parseLong(id), false);
           break;
         case "new":
+          this.dettaglioStudente(resp, -1, false);
           break;
         default:
           this.listaStudenti(resp);
@@ -116,11 +125,15 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     StudenteDTO studente = null;
     String messaggioErrore = null;
 
-    try {
-      CorsoDiStudiDAO studenteDAO = new CorsoDiStudiDAO();
-      studente = studenteDAO.getStudente(id);
-    } catch (CDSException ex) {
-      messaggioErrore = "Impossibile leggere i dati dal database: " + ex.getLocalizedMessage();
+    if (id == -1) {
+      studente = new StudenteDTO(-1, "", "", null, "", "", "");
+    } else {
+      try {
+        CorsoDiStudiDAO studenteDAO = new CorsoDiStudiDAO();
+        studente = studenteDAO.getStudente(id);
+      } catch (CDSException ex) {
+        messaggioErrore = "Impossibile leggere i dati dal database: " + ex.getLocalizedMessage();
+      }
     }
 
     try (PrintWriter out = resp.getWriter()) {
@@ -209,7 +222,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("</table>");
     out.println("</div>");
   }
-  
+
   private void creaTabellaVoti(PrintWriter out, StudenteDTO studente) {
     out.println("<div class='row'>");
     out.println("<div class='col-sm-12'>");
@@ -222,7 +235,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("<tbody'>");
     studente.getVoti().forEach(voto -> {
       out.println("<tr>");
-      out.println("<td>" + voto.getMateria()+ "</td>");
+      out.println("<td>" + voto.getMateria() + "</td>");
       out.println("<td>" + voto.getValutazione() + "/30</td>");
       out.println("<td>" + voto.getDataVoto().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</td>");
       out.println("</tr>");
@@ -231,7 +244,6 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("</table>");
     out.println("</div>");
   }
-
 
   private void listaStudenti(HttpServletResponse resp) throws IOException {
     List<StudenteDTO> studenti;
@@ -272,7 +284,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
       out.print("<td>" + studente.getDataNascita().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")) + "</td >");
       out.print("<td>" + studente.getCodiceFiscale() + "</td >");
       out.println("  <td>" + studente.getMail() + "</td>");
-      out.println("  <td>" + studente.getMatricola()+ "</td>");
+      out.println("  <td>" + studente.getMatricola() + "</td>");
       out.println("</tr>");
     });
     out.println("</tbody>");

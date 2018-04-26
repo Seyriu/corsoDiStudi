@@ -31,6 +31,15 @@ public class VotoDTO {
     this.dataVoto = dataVoto;
   }
 
+  public VotoDTO(long idVoto, int valutazione, String Materia, LocalDate dataVoto) {
+    this.idVoto = idVoto;
+    this.valutazione = valutazione;
+    this.semestre = 0;
+    this.annoSemestre = -1;
+    this.materia = Materia;
+    this.dataVoto = dataVoto;
+  }
+
   public long getIdVoto() {
     return idVoto;
   }
@@ -128,7 +137,5 @@ public class VotoDTO {
   public String toString() {
     return "VotoDTO{" + "idVoto=" + idVoto + ", valutazione=" + valutazione + ", semestre=" + semestre + ", annoSemestre=" + annoSemestre + ", Materia=" + materia + ", dataVoto=" + dataVoto + '}';
   }
-
-  
 
 }
