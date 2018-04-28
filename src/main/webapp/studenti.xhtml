@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Studenti</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.js"></script>
+        <link rel="stylesheet" href="../css/bootstrap.css" type="text/css"/>
+        <link rel='icon' href='../img/cds_s.png'/>
+            <style type='text/css'>
+                .navbar-default {
+                    background-color: #eddead;
+                    border-color: #E7E7E7
+                }
+            </style>
+            <script type="text/javascript">
+                function mostraModale() {
+                    $('#myModal').modal('show');
+                }
+
+                function nascondiModale() {
+                    $('#myModal').modal('hide');
+                }
+            </script>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigazione">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+                        <img alt="CorsoDiStudi" src="../img/cds_s.png" width="20"/>
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navigazione">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../professori">Professori</a></li>
+                        <li><a class="active" href="studenti.xhtml">Studenti</a></li>
+                        <li><a href="#">Orari</a></li>
+                        <li><a href="#">Calendario</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Materie <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Calcolo</a></li>
+                                <li><a href="#">Architettura</a></li>
+                                <li><a href="#">Algoritmi</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="tasse">Tasse</a></li>
+                        <li><a href="#">Contatti</a></li>                         
+                    </ul>                                        
+                </div>
+            </div>
+        </nav>
+
+        <h:form id="tabella_studenti" class="container-fluid">
+            <div class='table-responsive'>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th class='col-sm-1'>
+                                <h:commandButton class='btn btn-primary' value="#{msg.new_student}">
+                                    <f:ajax execute="" render="modale_studenti" listener="#{studenteBean.loadStudente(-1, false)}" onevent="mostraModale"/> 
+                                </h:commandButton>
+                            </th>
+                            <th class='col-sm-2'>#{msg.student_name}</th>
+                            <th class='col-sm-2'>#{msg.student_surname}</th>
+                            <th class='col-sm-2'>#{msg.student_birthdate}</th>
+                            <th class='col-sm-2'>#{msg.student_codice_fiscale}</th>
+                            <th class='col-sm-3'>#{msg.student_email}</th>
+                            <th class='col-sm-1'>#{msg.student_reg_number}</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <ui:repeat var="studente" value="#{studenteBean.studenti}">
+                            <tr>
+                                <td>
+                                    <h:commandLink class='btn btn-default' title='#{msg.student_show_detail}'>
+                                        <span class='glyphicon glyphicon-eye-open'></span>
+                                        <!--render puo' solo essere solo legato all'id di un tag jsf ex: h:control. Parte da riaggiornare-->
+                                        <f:ajax execute="" render="modale_studenti" listener="#{studenteBean.loadStudente(studente.id, true)}" onevent="mostraModale"/> 
+                                    </h:commandLink>
+                                    <h:commandLink class='btn btn-default' title='#{msg.student_edit_data}'>
+                                        <span class='glyphicon glyphicon-pencil'></span>
+                                        <f:ajax execute="" render="modale_studenti" listener="#{studenteBean.loadStudente(studente.id, false)}" onevent="mostraModale"/> 
+                                    </h:commandLink>
+                                </td>
+                                <td>#{studente.nome}</td>
+                                <td>#{studente.cognome}</td>
+                                <td><h:outputFormat value="#{studente.dataNascita}"/></td>
+                                <td>#{studente.codiceFiscale}</td>
+                                <td>#{studente.mail}</td>
+                                <td>#{studente.matricola}</td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </div>  
+        </h:form>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <h:form id="modale_studenti">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Dettaglio Studente</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Nome</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.nome}" disabled='#{studenteBean.disabled}'/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Cognome</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.cognome}" disabled='#{studenteBean.disabled}'/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Data di nascita</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.dataNascitaAsString}" disabled="#{studenteBean.disabled}">  
+                                        <f:passThroughAttribute name="type" value="date"/>
+                                    </h:inputText>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Codice Fiscale</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.codiceFiscale}" disabled='#{studenteBean.disabled}'/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="">Email</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.mail}" disabled='#{studenteBean.disabled}'/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="">Matricola</label>
+                                    <h:inputText class="form-control" value="#{studenteBean.studente.matricola}" disabled='#{studenteBean.disabled}'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                            <h:commandButton type="button" class="btn btn-primary" disabled='#{studenteBean.disabled}' value='Salva'>
+                                <!--executing what's inside the modal form, rendering the table-->
+                                <f:ajax execute="modale_studenti" render="tabella_studenti" listener="#{studenteBean.saveStudente()}" onevent="nascondiModale"/> 
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </h:body>
+</html>
+
