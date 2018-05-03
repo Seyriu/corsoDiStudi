@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import org.forit.corsoDiStudi.dto.ProfessoreDTO;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
-import org.forit.corsoDiStudi.dto.TasseDTO;
+import org.forit.corsoDiStudi.dto.TassaDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;
 
@@ -306,19 +306,19 @@ public class CorsoDiStudiDAO {
     }
   }
 
-  public List<TasseDTO> getListaTasse() throws CDSException {
+  public List<TassaDTO> getListaTasse() throws CDSException {
     try (Connection conn = DriverManager.getConnection(DB_URL);
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(LISTA_TASSE)) {
 
-      List<TasseDTO> listaTasse = new ArrayList<>();
+      List<TassaDTO> listaTasse = new ArrayList<>();
 
       while (rs.next()) {
         long id = rs.getLong("ID");
         String isee = rs.getString("ISEE");
         BigDecimal costo = rs.getBigDecimal("COSTO");
 
-        TasseDTO tassa = new TasseDTO(id, isee, costo);
+        TassaDTO tassa = new TassaDTO(id, isee, costo);
         listaTasse.add(tassa);
 
       }
@@ -356,7 +356,7 @@ public class CorsoDiStudiDAO {
         String iseeTassa = rs.getString("ISEE");
         BigDecimal costoTassa = rs.getBigDecimal("COSTO");
 
-        TasseDTO tassa = new TasseDTO(idTassa, iseeTassa, costoTassa);
+        TassaDTO tassa = new TassaDTO(idTassa, iseeTassa, costoTassa);
         studente.getTasse().add(tassa);
       }
 

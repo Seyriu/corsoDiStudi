@@ -19,7 +19,7 @@ public class StudenteDTO {
     private String matricola;
     private String mail;
     
-    private List<TasseDTO> tasse = new ArrayList<>();
+    private List<TassaDTO> tasse = new ArrayList<>();
     private List<VotoDTO> voti = new ArrayList<>();
 
     public StudenteDTO() {
@@ -103,11 +103,11 @@ public class StudenteDTO {
         this.mail = mail;
     }
 
-  public List<TasseDTO> getTasse() {
+  public List<TassaDTO> getTasse() {
     return tasse;
   }
 
-  public void setTasse(List<TasseDTO> tasse) {
+  public void setTasse(List<TassaDTO> tasse) {
     this.tasse = tasse;
   }
 

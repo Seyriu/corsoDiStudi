@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.forit.corsoDiStudi.dao.CorsoDiStudiDAO;
 import org.forit.corsoDiStudi.dto.ProfessoreDTO;
-import org.forit.corsoDiStudi.dto.TasseDTO;
+import org.forit.corsoDiStudi.dto.TassaDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;
 
 /**
@@ -57,7 +57,7 @@ public class TasseServlet extends CorsoDiStudiServlet {
     }
 
     private void listaProfessori(HttpServletResponse resp) throws IOException {
-        List<TasseDTO> tasse;
+        List<TassaDTO> tasse;
         String messaggioErrore = null;
 
         try {
@@ -75,7 +75,7 @@ public class TasseServlet extends CorsoDiStudiServlet {
         }
     }
 
-    private void createTabellaTasse(PrintWriter out, List<TasseDTO> tasse) {
+    private void createTabellaTasse(PrintWriter out, List<TassaDTO> tasse) {
         out.println("<div class='table-responsive'>");
         out.println("<table class='table'>");
         out.println(THEAD);

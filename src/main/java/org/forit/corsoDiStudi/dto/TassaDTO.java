@@ -12,16 +12,16 @@ import java.util.Objects;
  *
  * @author UTENTE
  */
-public class TasseDTO {
+public class TassaDTO {
 
   private long id;
   private String isee;
   BigDecimal costo;
 
-  public TasseDTO() {
+  public TassaDTO() {
   }
 
-  public TasseDTO(long id, String isee, BigDecimal costo) {
+  public TassaDTO(long id, String isee, BigDecimal costo) {
     this.id = id;
     this.isee = isee;
     this.costo = costo;
@@ -71,7 +71,7 @@ public class TasseDTO {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    final TasseDTO other = (TasseDTO) obj;
+    final TassaDTO other = (TassaDTO) obj;
     if (this.id != other.id) {
       return false;
     }
