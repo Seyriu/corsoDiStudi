@@ -16,9 +16,10 @@ import org.junit.Test;
 public class TestCorsoDiStudiDAO {
 
 //  @Test
-//  public void getStudente() throws CDSException {
+//  public void getProfessoriFromVoto() throws CDSException {
 //    CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
-//    System.out.println(cdsDAO.getStudente(1));
+//    System.out.println(cdsDAO.getStudente((long)1).getVoti());
+//    System.out.println(cdsDAO.getVotiFromIdStudente(1));
 //  }
 
 }

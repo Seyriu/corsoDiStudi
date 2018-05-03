@@ -18,7 +18,7 @@ public class MateriaDTO {
     public MateriaDTO() {
     }
 
-    public MateriaDTO(long id, String nome, String cognome) {
+    public MateriaDTO(long id, String nome) {
         this.id = id;
         this.nome = nome;
     }

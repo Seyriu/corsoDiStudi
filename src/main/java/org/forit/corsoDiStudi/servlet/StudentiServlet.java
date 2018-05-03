@@ -235,7 +235,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("<tbody'>");
     studente.getVoti().forEach(voto -> {
       out.println("<tr>");
-      out.println("<td>" + voto.getMateria() + "</td>");
+      out.println("<td>" + voto.getIdMateria() + "</td>");
       out.println("<td>" + voto.getValutazione() + "/30</td>");
       out.println("<td>" + voto.getDataVoto().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</td>");
       out.println("</tr>");

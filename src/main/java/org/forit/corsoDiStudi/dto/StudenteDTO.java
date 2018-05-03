@@ -6,6 +6,7 @@
 package org.forit.corsoDiStudi.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +65,18 @@ public class StudenteDTO {
 
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
+    }
+    
+    public String getDataNascitaAsString() {
+      return dataNascita.toString();
+    }
+    
+    public String getDataNascitaAsFormattedString() {
+      return dataNascita.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
+    public void setDataNascitaAsString(String dataNascita) {
+      this.dataNascita = LocalDate.parse(dataNascita);
     }
 
     public String getCodiceFiscale() {

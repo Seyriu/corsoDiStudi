@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -40,6 +41,11 @@ public class CorsoDiStudiDAO {
           + "group by c.NOME "
           + "order by c.NOME";
   private static final String GET_PROFESSORI = "SELECT * FROM professore;";
+
+  private static final String GET_PROFESSORI_FROM_VOTO
+          = "SELECT vxp.*, p.NOME, p.COGNOME, p.MAIL "
+          + "FROM corsodistudi.voto_x_prof vxp, corsodistudi.professore p "
+          + "where vxp.ID_VOTI=? and vxp.ID_PROF=p.ID;";
 
   private static final String LISTA_STUDENTI
           = "SELECT "
@@ -73,15 +79,33 @@ public class CorsoDiStudiDAO {
           + "WHERE s.ID=? and t.ID=s.ID_TASSA";
 
   private static final String VOTI_X_STUDENTE
-          = "SELECT v.ID, v.VALUTAZIONE, V.DATA, m.NOME NOME_MATERIA, sm.SEMESTRE NOME_SEMESTRE, sm.ANNO ANNO_SEMESTRE \n"
+          = "SELECT v.ID, v.VALUTAZIONE, V.DATA, V.ID_MATERIA, sm.SEMESTRE NOME_SEMESTRE, sm.ANNO ANNO_SEMESTRE \n"
           + "FROM studente s, voto v, materia m, semestre sm\n"
           + "WHERE s.ID=? and v.ID_STUDENTE=s.ID and m.ID=v.ID_MATERIA and sm.ID=v.ID_SEMESTRE";
-  
+
   private static final String UPDATE_STUDENTE
           = "update studente set "
           + "nome=?, cognome=?, data_di_nascita = ?, codice_fiscale=?, matricola=?, mail=? "
           + "where id=?";
-  
+
+  private static final String UPDATE_VOTO
+          = "update Voto set "
+          + "valutazione=?, data=?, id_materia=? "
+          + "where id=?";
+
+  private static final String GET_MATERIE
+          = "SELECT * FROM corsodistudi.materia;";
+
+  private static final String GET_VOTI
+          = "select v.*, m.nome "
+          + "from voto v, materia m "
+          + "where v.ID_MATERIA=m.ID";
+
+  private static final String GET_VOTI_OF_STUDENTE = ""
+          + "select v.*, m.nome "
+          + "from voto v, materia m "
+          + "where v.ID_STUDENTE=? and v.ID_MATERIA=m.ID";
+
   static {
     try {
       Class.forName("com.mysql.jdbc.Driver");
@@ -147,15 +171,33 @@ public class CorsoDiStudiDAO {
       List<ProfessoreDTO> professori = new ArrayList<>();
       while (rs.next()) {
         professori.add(new ProfessoreDTO(
+                rs.getLong("ID"),
                 rs.getString("NOME"),
                 rs.getString("COGNOME"),
-                rs.getString("MAIL"),
-                rs.getLong("ID"))
+                rs.getString("MAIL"))
         );
       }
       return professori;
     } catch (SQLException ex) {
       System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public void updateVoto(long idVoto, long idMateria, LocalDate dataVoto, int valutazione) throws CDSException {
+    try (Connection conn = DriverManager.getConnection(DB_URL);) {
+      try (PreparedStatement ps1 = conn.prepareStatement(UPDATE_VOTO)) {
+
+        ps1.setInt(1, valutazione);
+        ps1.setDate(2, Date.valueOf(dataVoto));
+        ps1.setLong(3, idMateria);
+        ps1.setLong(4, idVoto);
+        ps1.executeUpdate();
+      } catch (SQLException ex) {
+        throw ex;
+      }
+    } catch (SQLException ex) {
+      System.out.println("Si è verificato un errore " + ex.getMessage());
       throw new CDSException(ex);
     }
   }
@@ -179,7 +221,7 @@ public class CorsoDiStudiDAO {
       throw new CDSException(ex);
     }
   }
-  
+
   public List<StudenteDTO> getListaStudenti() throws CDSException {
     try (
             Connection conn = DriverManager.getConnection(DB_URL);
@@ -233,8 +275,8 @@ public class CorsoDiStudiDAO {
       throw new CDSException(ex);
     }
   }
-  
-    public void insertStudente(StudenteDTO studente) throws CDSException {
+
+  public void insertStudente(StudenteDTO studente) throws CDSException {
 
     try (Connection conn = DriverManager.getConnection(DB_URL)) {
       conn.setAutoCommit(false);
@@ -324,17 +366,103 @@ public class CorsoDiStudiDAO {
         long idVoto = rs.getLong("ID");
         int valutazione = rs.getInt("VALUTAZIONE");
         LocalDate dataVoto = rs.getDate("DATA").toLocalDate();
-        String materia = rs.getString("NOME_MATERIA");
-        int semestre = rs.getInt("NOME_SEMESTRE");
-        int annoSemestre = rs.getInt("ANNO_SEMESTRE");
+        Long idMateria = rs.getLong("ID_MATERIA");
 
-        VotoDTO voto = new VotoDTO(idVoto, valutazione, semestre, annoSemestre, materia, dataVoto);
+        VotoDTO voto = new VotoDTO(idVoto, id, idMateria, valutazione, dataVoto);
+        voto.setProfessori(getProfessoriFromIdVoto(idVoto));
         studente.getVoti().add(voto);
       }
 
       return studente;
     } catch (SQLException ex) {
       System.out.println("Si è verificato un errore " + ex.getMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public List<ProfessoreDTO> getProfessoriFromIdVoto(Long idVoto) throws CDSException {
+    try (
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement ps1 = conn.prepareStatement(GET_PROFESSORI_FROM_VOTO)) {
+
+      ps1.setLong(1, idVoto);
+      ResultSet rs = ps1.executeQuery();
+      List<ProfessoreDTO> professori = new ArrayList<>();
+      while (rs.next()) {
+        professori.add(new ProfessoreDTO(
+                rs.getLong("ID_PROF"),
+                rs.getString("NOME"),
+                rs.getString("COGNOME"),
+                rs.getString("MAIL"))
+        );
+      }
+      return professori;
+    } catch (SQLException ex) {
+      System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public Map<Long, String> getListaMaterie() throws CDSException {
+    try (
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(GET_MATERIE)) {
+      Map<Long, String> materie = new LinkedHashMap<>();
+      while (rs.next()) {
+        long id = rs.getLong("ID");
+        String descrizione = rs.getString("NOME");
+        materie.put(id, descrizione);
+      }
+      return materie;
+    } catch (SQLException ex) {
+      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public List<VotoDTO> getListaVoti() throws CDSException {
+    try (
+            Connection conn = DriverManager.getConnection(DB_URL);
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(GET_VOTI)) {
+      List<VotoDTO> voti = new ArrayList<>();
+      while (rs.next()) {
+        voti.add(new VotoDTO(
+                rs.getLong("ID"),
+                rs.getLong("ID_STUDENTE"),
+                rs.getLong("ID_MATERIA"),
+                rs.getInt("VALUTAZIONE"),
+                rs.getDate("DATA").toLocalDate())
+        );
+      }
+      return voti;
+    } catch (SQLException ex) {
+      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+      throw new CDSException(ex);
+    }
+  }
+
+  public List<VotoDTO> getVotiFromIdStudente(long idStudente) throws CDSException {
+    try (
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement ps1 = conn.prepareStatement(GET_VOTI_OF_STUDENTE)) {
+
+      ps1.setLong(1, idStudente);
+      ResultSet rs = ps1.executeQuery();
+      List<VotoDTO> voti = new ArrayList<>();
+      while (rs.next()) {
+        voti.add(new VotoDTO(
+                rs.getLong("ID"),
+                rs.getLong("ID_STUDENTE"),
+                rs.getLong("ID_MATERIA"),
+                rs.getInt("VALUTAZIONE"),
+                rs.getDate("DATA").toLocalDate())
+        );
+      }
+      return voti;
+    } catch (SQLException ex) {
+      System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
       throw new CDSException(ex);
     }
   }
