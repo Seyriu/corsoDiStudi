@@ -113,7 +113,7 @@ public class MateriaDAO {
       MateriaEntity materia = em.find(MateriaEntity.class, id);
       em.remove(materia);
 
-      em.persist(materia);
+//      em.persist(materia);
       transaction.commit();
     } catch (Exception ex) {
       transaction.rollback();

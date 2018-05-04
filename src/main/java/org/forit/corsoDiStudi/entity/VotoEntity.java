@@ -25,7 +25,7 @@ import javax.persistence.Table;
 @Table(name = "voto")
 @NamedQueries({
   @NamedQuery(name = "voto.selectAll",
-          query = "SELECT v from VotoEntity v Order by v.id_studente")
+          query = "SELECT v from VotoEntity v")
 })
 public class VotoEntity implements Serializable{
   

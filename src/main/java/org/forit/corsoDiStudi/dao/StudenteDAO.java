@@ -5,6 +5,10 @@
  */
 package org.forit.corsoDiStudi.dao;
 
+import javax.persistence.Entity;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Table;
+
 /**
  *
  * @author Utente
