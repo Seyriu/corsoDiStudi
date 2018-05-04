@@ -64,9 +64,9 @@ public class StudenteEntity implements Serializable{
   @JoinColumn(name="ID_STUDENTE")
   private List<VotoEntity> votiStudente;
 
-//  @OneToOne
-//  @JoinColumn(name="ID_CLASSE")
-//  private ClasseEntity classe;
+  @OneToOne
+  @JoinColumn(name="ID_CLASSE")
+  private ClasseEntity classe;
   
   public StudenteEntity() {
   }
@@ -153,6 +153,14 @@ public class StudenteEntity implements Serializable{
     this.votiStudente = votiStudente;
   }
 
+  public ClasseEntity getClasse() {
+    return classe;
+  }
+
+  public void setClasse(ClasseEntity classe) {
+    this.classe = classe;
+  }
+  
   @Override
   public int hashCode() {
     int hash = 7;

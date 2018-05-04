@@ -6,7 +6,6 @@
 package org.forit.corsoDiStudi.dao;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -15,6 +14,7 @@ import javax.persistence.Persistence;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
 import org.forit.corsoDiStudi.dto.TassaDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
+import org.forit.corsoDiStudi.entity.ClasseEntity;
 import org.forit.corsoDiStudi.entity.StudenteEntity;
 import org.forit.corsoDiStudi.entity.TassaEntity;
 import org.forit.corsoDiStudi.entity.VotoEntity;
@@ -61,21 +61,11 @@ public class StudenteDAO {
             }).collect(Collectors.toList());
     sdto.setVoti(votiDTO);
 
+    ClasseEntity classe = studente.getClasse();
+    //ClasseDTO cdto = new ClasseDTO();
+    
     em.close();
     emf.close();
-//
-//      ps3.setLong(1, id);
-//      rs = ps3.executeQuery();
-//      while (rs.next()) {
-//        long idVoto = rs.getLong("ID");
-//        int valutazione = rs.getInt("VALUTAZIONE");
-//        LocalDate dataVoto = rs.getDate("DATA").toLocalDate();
-//        Long idMateria = rs.getLong("ID_MATERIA");
-//
-//        VotoDTO voto = new VotoDTO(idVoto, id, idMateria, valutazione, dataVoto);
-//        voto.setProfessori(getProfessoriFromIdVoto(idVoto));
-//        studente.getVoti().add(voto);
-//      }
     return sdto;
   }
 }
