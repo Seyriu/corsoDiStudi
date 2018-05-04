@@ -77,7 +77,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     String matricola = req.getParameter("matricola");
 
     try {
-      StudenteDTO studente = new StudenteDTO(id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
+      StudenteDTO studente = new StudenteDTO();//id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
       CorsoDiStudiDAO cdsDAO = new CorsoDiStudiDAO();
       if (id == -1) {
         cdsDAO.insertStudente(studente);
@@ -126,7 +126,7 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     String messaggioErrore = null;
 
     if (id == -1) {
-      studente = new StudenteDTO(-1, "", "", null, "", "", "");
+      studente = new StudenteDTO();//-1, "", "", null, "", "", "");
     } else {
       try {
         CorsoDiStudiDAO studenteDAO = new CorsoDiStudiDAO();

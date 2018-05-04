@@ -42,7 +42,9 @@ public class StudenteDAO {
     String codiceFiscale = studente.getCodiceFiscale();
     String matricola = studente.getMatricola();
 
-    StudenteDTO sdto = new StudenteDTO(id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
+    ClasseEntity classe = studente.getClasse();
+
+    StudenteDTO sdto = new StudenteDTO(id, nome, cognome,mail, matricola, dataNascita, codiceFiscale, classe.getNome());
 
     TassaEntity tassa = studente.getTassa();
     TassaDTO tdto = new TassaDTO(tassa.getId(), tassa.getIsee(), tassa.getCosto());
@@ -61,9 +63,6 @@ public class StudenteDAO {
             }).collect(Collectors.toList());
     sdto.setVoti(votiDTO);
 
-    ClasseEntity classe = studente.getClasse();
-    //ClasseDTO cdto = new ClasseDTO();
-    
     em.close();
     emf.close();
     return sdto;

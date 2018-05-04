@@ -34,90 +34,114 @@ public class ProfessoreDTO {
 
     }
 
-    public String getNome() {
-        return nome;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public String getCognome() {
-        return cognome;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public String getCognome() {
+    return cognome;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setCognome(String cognome) {
+    this.cognome = cognome;
+  }
 
-    public long getId() {
-        return id;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-    
-    public List<MateriaDTO> getMateria(){
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public List<MateriaDTO> getMateria() {
     return materia;
-    }
-    public List<VotoDTO> getVoti() {
+  }
+
+  public void setMateria(List<MateriaDTO> materia) {
+    this.materia = materia;
+  }
+
+  public List<VotoDTO> getVoti() {
     return voti;
   }
-    
-    public List<StudenteDTO> getStudente() {
+
+  public void setVoti(List<VotoDTO> voti) {
+    this.voti = voti;
+  }
+
+  public List<StudenteDTO> getStudente() {
     return studente;
   }
-   
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 71 * hash + Objects.hashCode(this.nome);
-        hash = 71 * hash + Objects.hashCode(this.cognome);
-        hash = 71 * hash + Objects.hashCode(this.email);
-        return hash;
-    }
+  public void setStudente(List<StudenteDTO> studente) {
+    this.studente = studente;
+  }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ProfessoreDTO other = (ProfessoreDTO) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.cognome, other.cognome)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        return true;
-    }
+  @Override
+  public int hashCode() {
+    int hash = 3;
+    hash = 11 * hash + (int) (this.id ^ (this.id >>> 32));
+    hash = 11 * hash + Objects.hashCode(this.nome);
+    hash = 11 * hash + Objects.hashCode(this.cognome);
+    hash = 11 * hash + Objects.hashCode(this.email);
+    hash = 11 * hash + Objects.hashCode(this.materia);
+    hash = 11 * hash + Objects.hashCode(this.voti);
+    hash = 11 * hash + Objects.hashCode(this.studente);
+    return hash;
+  }
 
-    @Override
-    public String toString() {
-        return "ProfessoreDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + '}';
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
     }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final ProfessoreDTO other = (ProfessoreDTO) obj;
+    if (this.id != other.id) {
+      return false;
+    }
+    if (!Objects.equals(this.nome, other.nome)) {
+      return false;
+    }
+    if (!Objects.equals(this.cognome, other.cognome)) {
+      return false;
+    }
+    if (!Objects.equals(this.email, other.email)) {
+      return false;
+    }
+    if (!Objects.equals(this.materia, other.materia)) {
+      return false;
+    }
+    if (!Objects.equals(this.voti, other.voti)) {
+      return false;
+    }
+    if (!Objects.equals(this.studente, other.studente)) {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    return "ProfessoreDTO{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + ", materia=" + materia + ", voti=" + voti + ", studente=" + studente + '}';
+  }
 
 }

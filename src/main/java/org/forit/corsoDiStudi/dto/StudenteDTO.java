@@ -14,26 +14,26 @@ import java.util.Objects;
 public class StudenteDTO {
 
   private long id;
-  private String nome, cognome;
+  private String nome, cognome, mail, matricola;
   private LocalDate dataNascita;
   private String codiceFiscale;
-  private String matricola;
-  private String mail;
 
+  private String classe;
   private TassaDTO tassa = new TassaDTO();
   private List<VotoDTO> voti = new ArrayList<>();
 
   public StudenteDTO() {
   }
 
-  public StudenteDTO(long id, String nome, String cognome, LocalDate dataNascita, String codiceFiscale, String matricola, String mail) {
+  public StudenteDTO(long id, String nome, String cognome, String mail, String matricola, LocalDate dataNascita, String codiceFiscale, String classe) {
     this.id = id;
     this.nome = nome;
     this.cognome = cognome;
+    this.mail = mail;
+    this.matricola = matricola;
     this.dataNascita = dataNascita;
     this.codiceFiscale = codiceFiscale;
-    this.matricola = matricola;
-    this.mail = mail;
+    this.classe = classe;
   }
 
   public long getId() {
@@ -119,6 +119,14 @@ public class StudenteDTO {
 
   public void setVoti(List<VotoDTO> voti) {
     this.voti = voti;
+  }
+
+  public String getClasse() {
+    return classe;
+  }
+
+  public void setClasse(String classe) {
+    this.classe = classe;
   }
 
   @Override

@@ -229,17 +229,17 @@ public class CorsoDiStudiDAO {
             ResultSet rs = st.executeQuery(LISTA_STUDENTI)) {
 
       List<StudenteDTO> studenti = new ArrayList<>();
-      while (rs.next()) {
-        studenti.add(new StudenteDTO(
-                rs.getLong("ID"),
-                rs.getString("NOME"),
-                rs.getString("COGNOME"),
-                rs.getDate("DATA_DI_NASCITA").toLocalDate(),
-                rs.getString("CODICE_FISCALE"),
-                rs.getString("MATRICOLA"),
-                rs.getString("MAIL"))
-        );
-      }
+//      while (rs.next()) {
+//        studenti.add(new StudenteDTO(
+//                rs.getLong("ID"),
+//                rs.getString("NOME"),
+//                rs.getString("COGNOME"),
+//                rs.getDate("DATA_DI_NASCITA").toLocalDate(),
+//                rs.getString("CODICE_FISCALE"),
+//                rs.getString("MATRICOLA"),
+//                rs.getString("MAIL"))
+//        );
+//      }
       return studenti;
     } catch (SQLException ex) {
       System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
@@ -347,7 +347,7 @@ public class CorsoDiStudiDAO {
       String codiceFiscale = rs.getString("CODICE_FISCALE");
       String matricola = rs.getString("MATRICOLA");
 
-      StudenteDTO studente = new StudenteDTO(id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
+      StudenteDTO studente = new StudenteDTO();//id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
 
       ps2.setLong(1, id);
       rs = ps2.executeQuery();

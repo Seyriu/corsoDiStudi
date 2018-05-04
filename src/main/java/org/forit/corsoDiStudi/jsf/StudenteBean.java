@@ -25,7 +25,7 @@ import org.forit.corsoDiStudi.exceptions.CDSException;
 public class StudenteBean {
 
   List<StudenteDTO> studenti = new ArrayList<>();
-  StudenteDTO studente = new StudenteDTO(-1, "", "", LocalDate.now(), "", "", "");
+  StudenteDTO studente = new StudenteDTO(-1, "", "","","", LocalDate.now(), "", "");
   private boolean disabled;
 
   @ManagedProperty(value = "#{votoBean}")
@@ -60,7 +60,7 @@ public class StudenteBean {
   public void loadStudente(long id, boolean disabled) {
     this.disabled = disabled;
     if (id == -1) {
-      studente = new StudenteDTO(-1, "", "", LocalDate.now(), "", "", "");
+      studente = new StudenteDTO(-1, "", "","","", LocalDate.now(), "", "");
     } else {
       try {
         CorsoDiStudiDAO studenteDAO = new CorsoDiStudiDAO();
@@ -68,7 +68,7 @@ public class StudenteBean {
         voto.setVoti(studente.getVoti());
       } catch (CDSException ex) {
         System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
-        studente = new StudenteDTO(-1, "", "", LocalDate.now(), "", "", "");
+        studente = new StudenteDTO(-1, "", "","","", LocalDate.now(), "", "");
       }
     }
   }
