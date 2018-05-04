@@ -6,13 +6,18 @@
 package org.forit.corsoDiStudi.dao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
 import org.forit.corsoDiStudi.dto.TassaDTO;
+import org.forit.corsoDiStudi.dto.VotoDTO;
 import org.forit.corsoDiStudi.entity.StudenteEntity;
 import org.forit.corsoDiStudi.entity.TassaEntity;
+import org.forit.corsoDiStudi.entity.VotoEntity;
 
 /**
  *
@@ -37,13 +42,25 @@ public class StudenteDAO {
     String codiceFiscale = studente.getCodiceFiscale();
     String matricola = studente.getMatricola();
 
-
     StudenteDTO sdto = new StudenteDTO(id, nome, cognome, dataNascita, codiceFiscale, matricola, mail);
 
     TassaEntity tassa = studente.getTassa();
     TassaDTO tdto = new TassaDTO(tassa.getId(), tassa.getIsee(), tassa.getCosto());
     sdto.setTassa(tdto);
-    
+
+    List<VotoEntity> votiStudente = studente.getVotiStudente();
+    List<VotoDTO> votiDTO = votiStudente.stream().
+            map(entity -> {
+              return new VotoDTO(
+                      entity.getId(),
+                      studente.getId(),
+                      entity.getIdMateria(),
+                      entity.getValutazione(),
+                      entity.getDataVoto()
+              );
+            }).collect(Collectors.toList());
+    sdto.setVoti(votiDTO);
+
     em.close();
     emf.close();
 //

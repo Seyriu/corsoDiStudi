@@ -7,6 +7,7 @@ package org.forit.corsoDiStudi.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -54,12 +56,17 @@ public class StudenteEntity implements Serializable{
   @Column(name = "MATRICOLA", unique = false, nullable = true)
   private String matricola;
 
-  @Column(name = "ID_CLASSE", unique = false, nullable = true)
-  private String idClasse;
-
   @OneToOne
   @JoinColumn(name="ID_TASSA")
   private TassaEntity tassa;
+  
+  @OneToMany
+  @JoinColumn(name="ID_STUDENTE")
+  private List<VotoEntity> votiStudente;
+
+//  @OneToOne
+//  @JoinColumn(name="ID_CLASSE")
+//  private ClasseEntity classe;
   
   public StudenteEntity() {
   }
@@ -72,7 +79,6 @@ public class StudenteEntity implements Serializable{
     this.mail = mail;
     this.codiceFiscale = codiceFiscale;
     this.matricola = matricola;
-    this.idClasse = idClasse;
   }
 
   public long getId() {
@@ -131,20 +137,20 @@ public class StudenteEntity implements Serializable{
     this.matricola = matricola;
   }
 
-  public String getIdClasse() {
-    return idClasse;
-  }
-
-  public void setIdClasse(String idClasse) {
-    this.idClasse = idClasse;
-  }
-
   public TassaEntity getTassa() {
     return tassa;
   }
 
   public void setTassa(TassaEntity tassa) {
     this.tassa = tassa;
+  }
+
+  public List<VotoEntity> getVotiStudente() {
+    return votiStudente;
+  }
+
+  public void setVotiStudente(List<VotoEntity> votiStudente) {
+    this.votiStudente = votiStudente;
   }
 
   @Override
@@ -157,7 +163,6 @@ public class StudenteEntity implements Serializable{
     hash = 31 * hash + Objects.hashCode(this.mail);
     hash = 31 * hash + Objects.hashCode(this.codiceFiscale);
     hash = 31 * hash + Objects.hashCode(this.matricola);
-    hash = 31 * hash + Objects.hashCode(this.idClasse);
     return hash;
   }
 
@@ -191,9 +196,6 @@ public class StudenteEntity implements Serializable{
     if (!Objects.equals(this.matricola, other.matricola)) {
       return false;
     }
-    if (!Objects.equals(this.idClasse, other.idClasse)) {
-      return false;
-    }
     if (!Objects.equals(this.dataNascita, other.dataNascita)) {
       return false;
     }
@@ -202,7 +204,7 @@ public class StudenteEntity implements Serializable{
 
   @Override
   public String toString() {
-    return "StudenteEntity{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", mail=" + mail + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", idClasse=" + idClasse + ", tassa=" + tassa + '}';
+    return "StudenteEntity{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", tassa=" + tassa + '}';
   }
   
 }
