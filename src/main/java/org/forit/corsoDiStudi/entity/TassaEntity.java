@@ -7,14 +7,18 @@ package org.forit.corsoDiStudi.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -40,6 +44,10 @@ public class TassaEntity implements Serializable{
   @Column(name = "COSTO", unique = false, nullable = true)
   private BigDecimal costo;
 
+  @OneToMany(mappedBy = "tassa", cascade = CascadeType.ALL, 
+              fetch = FetchType.LAZY)
+    private List<StudenteEntity> studenti;
+  
   public TassaEntity() {
   }
 
@@ -73,6 +81,14 @@ public class TassaEntity implements Serializable{
     this.costo = costo;
   }
 
+  public List<StudenteEntity> getStudenti() {
+    return studenti;
+  }
+
+  public void setStudenti(List<StudenteEntity> studenti) {
+    this.studenti = studenti;
+  }
+  
   @Override
   public int hashCode() {
     int hash = 7;

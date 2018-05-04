@@ -13,8 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -52,16 +54,17 @@ public class StudenteEntity implements Serializable{
   @Column(name = "MATRICOLA", unique = false, nullable = true)
   private String matricola;
 
-  @Column(name = "ID_TASSA", unique = false, nullable = true)
-  private String idTassa;
-
   @Column(name = "ID_CLASSE", unique = false, nullable = true)
   private String idClasse;
 
+  @OneToOne
+  @JoinColumn(name="ID_TASSA")
+  private TassaEntity tassa;
+  
   public StudenteEntity() {
   }
 
-  public StudenteEntity(long id, String nome, String cognome, LocalDate dataNascita, String mail, String codiceFiscale, String matricola, String idTassa, String idClasse) {
+  public StudenteEntity(long id, String nome, String cognome, LocalDate dataNascita, String mail, String codiceFiscale, String matricola, String idClasse) {
     this.id = id;
     this.nome = nome;
     this.cognome = cognome;
@@ -69,7 +72,6 @@ public class StudenteEntity implements Serializable{
     this.mail = mail;
     this.codiceFiscale = codiceFiscale;
     this.matricola = matricola;
-    this.idTassa = idTassa;
     this.idClasse = idClasse;
   }
 
@@ -129,20 +131,20 @@ public class StudenteEntity implements Serializable{
     this.matricola = matricola;
   }
 
-  public String getIdTassa() {
-    return idTassa;
-  }
-
-  public void setIdTassa(String idTassa) {
-    this.idTassa = idTassa;
-  }
-
   public String getIdClasse() {
     return idClasse;
   }
 
   public void setIdClasse(String idClasse) {
     this.idClasse = idClasse;
+  }
+
+  public TassaEntity getTassa() {
+    return tassa;
+  }
+
+  public void setTassa(TassaEntity tassa) {
+    this.tassa = tassa;
   }
 
   @Override
@@ -155,7 +157,6 @@ public class StudenteEntity implements Serializable{
     hash = 31 * hash + Objects.hashCode(this.mail);
     hash = 31 * hash + Objects.hashCode(this.codiceFiscale);
     hash = 31 * hash + Objects.hashCode(this.matricola);
-    hash = 31 * hash + Objects.hashCode(this.idTassa);
     hash = 31 * hash + Objects.hashCode(this.idClasse);
     return hash;
   }
@@ -190,9 +191,6 @@ public class StudenteEntity implements Serializable{
     if (!Objects.equals(this.matricola, other.matricola)) {
       return false;
     }
-    if (!Objects.equals(this.idTassa, other.idTassa)) {
-      return false;
-    }
     if (!Objects.equals(this.idClasse, other.idClasse)) {
       return false;
     }
@@ -204,7 +202,7 @@ public class StudenteEntity implements Serializable{
 
   @Override
   public String toString() {
-    return "StudenteEntity{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", mail=" + mail + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", idTassa=" + idTassa + ", idClasse=" + idClasse + '}';
+    return "StudenteEntity{" + "id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", dataNascita=" + dataNascita + ", mail=" + mail + ", codiceFiscale=" + codiceFiscale + ", matricola=" + matricola + ", idClasse=" + idClasse + ", tassa=" + tassa + '}';
   }
   
 }

@@ -357,7 +357,7 @@ public class CorsoDiStudiDAO {
         BigDecimal costoTassa = rs.getBigDecimal("COSTO");
 
         TassaDTO tassa = new TassaDTO(idTassa, iseeTassa, costoTassa);
-        studente.getTasse().add(tassa);
+        studente.setTassa(tassa);
       }
 
       ps3.setLong(1, id);

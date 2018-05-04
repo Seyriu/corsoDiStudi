@@ -5,7 +5,6 @@
  */
 package org.forit.corsoDiStudi.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -93,7 +92,7 @@ public class TassaDAO {
 //      em.persist(nazione); // fa la update se l'id esiste. Se l'id non esiste ed e' positivo, la persist fa la insert
       MateriaEntity materia = em.find(MateriaEntity.class, id);
       materia.setNome(nome);
-      em.merge(materia); // la merge va sempre in update
+      em.merge(materia); // la merge va sempre in update e aggiorna solo i campi richiesti
 
       em.persist(materia);
       transaction.commit();

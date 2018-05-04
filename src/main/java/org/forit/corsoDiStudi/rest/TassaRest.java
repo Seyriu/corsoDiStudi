@@ -11,7 +11,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import org.forit.corsoDiStudi.dao.MateriaDAO;
 import org.forit.corsoDiStudi.dao.TassaDAO;
 import org.forit.corsoDiStudi.dto.TassaDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;

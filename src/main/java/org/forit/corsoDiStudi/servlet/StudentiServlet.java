@@ -212,12 +212,12 @@ public class StudentiServlet extends CorsoDiStudiServlet {
     out.println("<table class='table'>");
     out.println(THEAD_TASSA);
     out.println("<tbody'>");
-    studente.getTasse().forEach(tasse -> {
-      out.println("<tr>");
-      out.println("<td>" + tasse.getIsee() + "</td>");
-      out.println("<td>" + tasse.getCosto() + " &euro;</td>");
-      out.println("</tr>");
-    });
+//    studente.getTasse().forEach(tasse -> {
+//      out.println("<tr>");
+//      out.println("<td>" + tasse.getIsee() + "</td>");
+//      out.println("<td>" + tasse.getCosto() + " &euro;</td>");
+//      out.println("</tr>");
+//    });
     out.println("</tbody'>");
     out.println("</table>");
     out.println("</div>");

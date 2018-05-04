@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import org.forit.corsoDiStudi.dao.CorsoDiStudiDAO;
+import org.forit.corsoDiStudi.dao.StudenteDAO;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
 import org.forit.corsoDiStudi.exceptions.CDSException;
@@ -43,13 +44,8 @@ public class StudenteRest {
   @GET
   @Produces("application/json")
   public StudenteDTO loadStudente(@PathParam("id") long id) {
-    try {
-      CorsoDiStudiDAO studenteDAO = new CorsoDiStudiDAO();
-      return studenteDAO.getStudente(id);
-    } catch (CDSException ex) {
-      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
-      return null;
-    }
+    StudenteDAO cds = new StudenteDAO();
+    return cds.loadStudente(id);
   }
 
   @Path("/")
