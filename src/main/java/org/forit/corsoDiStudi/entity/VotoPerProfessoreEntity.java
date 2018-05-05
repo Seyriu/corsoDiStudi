@@ -21,6 +21,10 @@ public class VotoPerProfessoreEntity implements Serializable {
   @ManyToOne
   @JoinColumn(name = "ID_VOTI")
   private VotoEntity votoEntity;
+  
+  @ManyToOne
+  @JoinColumn(name = "ID_PROF")
+  private ProfessoreEntity profEntity;
 
   public VotoPerProfessoreEntity() {
   }
@@ -32,6 +36,14 @@ public class VotoPerProfessoreEntity implements Serializable {
   public VotoEntity getVotoEntity() {
     return votoEntity;
   }
+
+    public ProfessoreEntity getProfEntity() {
+        return profEntity;
+    }
+
+    public void setProfEntity(ProfessoreEntity profEntity) {
+        this.profEntity = profEntity;
+    }
 
   public void setVotoEntity(VotoEntity votoEntity) {
     this.votoEntity = votoEntity;

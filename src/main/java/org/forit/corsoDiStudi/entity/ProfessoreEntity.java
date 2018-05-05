@@ -50,7 +50,7 @@ public class ProfessoreEntity implements Serializable {
   @ElementCollection()
   @CollectionTable(name = "materia_x_prof", joinColumns = @JoinColumn(name = "id_prof"))
   private List<MateriaPerProfessoreEntity> materie = new ArrayList<>();
-
+  
   @ElementCollection()
   @CollectionTable(name = "voto_x_prof", joinColumns = @JoinColumn(name = "id_prof"))
   private List<VotoPerProfessoreEntity> voti = new ArrayList<>();
