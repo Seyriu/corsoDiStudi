@@ -27,82 +27,87 @@ import org.forit.corsoDiStudi.exceptions.CDSException;
 @Path("/studenti")
 public class StudenteRest {
 
-  @Path("/")
-  @GET
-  @Produces("application/json")
-  public List<StudenteDTO> loadStudenti() {
-    CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-    try {
-      return cds.getListaStudenti();
-    } catch (CDSException ex) {
-      System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
-      return new ArrayList<>();
+    @Path("/")
+    @GET
+    @Produces("application/json")
+    public List<StudenteDTO> loadStudenti() {
+        CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
+        try {
+            return cds.getListaStudenti();
+        } catch (CDSException ex) {
+            System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+            return new ArrayList<>();
+        }
     }
-  }
 
-  @Path("/{id}")
-  @GET
-  @Produces("application/json")
-  public StudenteDTO loadStudente(@PathParam("id") long id) {
-    StudenteDAO cds = new StudenteDAO();
-    return cds.loadStudente(id);
-  }
-
-  @Path("/")
-  @POST
-  @Consumes("application/json")
-  @Produces("application/json")
-  public boolean insertStudente(StudenteDTO studente) {
-    try {
-      CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-      cds.insertStudente(studente);
-      return true;
-    } catch (CDSException ex) {
-      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
-      return false;
+    @Path("/{id}")
+    @GET
+    @Produces("application/json")
+    public StudenteDTO loadStudente(@PathParam("id") long id) {
+        StudenteDAO cds = new StudenteDAO();
+        try {
+            return cds.loadStudente(id);
+        } catch (CDSException ex) {
+            System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+        }
+        return null;
     }
-  }
 
-  @Path("/{id}")
-  @PUT
-  @Consumes("application/json")
-  @Produces("application/json")
-  public boolean updateStudente(StudenteDTO studente, @PathParam("id") Long id) {
-    try {
-      studente.setId(id);
-      CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-      cds.updateStudente(studente);
-      return true;
-    } catch (CDSException ex) {
-      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
-      return false;
+    @Path("/")
+    @POST
+    @Consumes("application/json")
+    @Produces("application/json")
+    public boolean insertStudente(StudenteDTO studente) {
+        try {
+            CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
+            cds.insertStudente(studente);
+            return true;
+        } catch (CDSException ex) {
+            System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+            return false;
+        }
     }
-  }
 
-  @Path("/{id}/voti/")
-  @GET
-  @Produces("application/json")
-  public List<VotoDTO> loadVotiOfStudente(@PathParam("id") long idStudente) {
-    CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-    try {
-      return cds.getVotiFromIdStudente(idStudente);
-    } catch (CDSException ex) {
-      System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
-      return new ArrayList<>();
+    @Path("/{id}")
+    @PUT
+    @Consumes("application/json")
+    @Produces("application/json")
+    public boolean updateStudente(StudenteDTO studente, @PathParam("id") Long id) {
+        try {
+            studente.setId(id);
+            CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
+            cds.updateStudente(studente);
+            return true;
+        } catch (CDSException ex) {
+            System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+            return false;
+        }
     }
-  }
 
-  @Path("/{id}/voti/{idVoto}/")
-  @PUT
-  @Produces("application/json")
-  public void updateVoto(VotoDTO voto, @PathParam("idVoto") long idVoto) {
-    try {
-      CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-      cds.updateVoto(idVoto, voto.getIdMateria(), voto.getDataVoto(), voto.getValutazione());
-    } catch (CDSException ex) {
-      System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+    @Path("/{id}/voti/")
+    @GET
+    @Produces("application/json")
+    public List<VotoDTO> loadVotiOfStudente(@PathParam("id") long idStudente) {
+        CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
+        try {
+            return cds.getVotiFromIdStudente(idStudente);
+        } catch (CDSException ex) {
+            System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
+            return new ArrayList<>();
+        }
     }
-  }
+
+    @Path("/{id}/voti/{idVoto}/")
+    @PUT
+    @Produces("application/json")
+    public void updateVoto(VotoDTO voto, @PathParam("idVoto") long idVoto) {
+        try {
+            CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
+            cds.updateVoto(idVoto, voto.getIdMateria(), voto.getDataVoto(), voto.getValutazione());
+        } catch (CDSException ex) {
+            System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());
+        }
+    }
 
 //  public void insertVoto() {
 //    try {
