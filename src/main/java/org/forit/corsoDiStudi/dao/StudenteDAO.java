@@ -7,10 +7,12 @@ package org.forit.corsoDiStudi.dao;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import org.forit.corsoDiStudi.dto.StudenteDTO;
 import org.forit.corsoDiStudi.dto.TassaDTO;
 import org.forit.corsoDiStudi.dto.VotoDTO;
@@ -76,7 +78,30 @@ public class StudenteDAO {
         }
     }
 
-//    public List<StudenteDTO> loadStudenti() {
-//
-//    }
+    public List<StudenteDTO> loadStudenti() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("corsodistudi_pu"); // nome dato in persistence.xml
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<StudenteEntity> query = em.createNamedQuery("studente.selectAll", StudenteEntity.class);
+        List<StudenteEntity> list = query.getResultList();
+        List<StudenteDTO> studente = list.stream().
+                map(entity -> {
+                    ClasseEntity classe = entity.getClasse();
+                    String nomeClasse = classe == null ? "" : classe.getNome();
+
+                    return new StudenteDTO(
+                            entity.getId(),
+                            entity.getNome(),
+                            entity.getCognome(),
+                            entity.getMail(),
+                            entity.getMatricola(),
+                            entity.getDataNascita(),
+                            entity.getCodiceFiscale(),
+                            nomeClasse
+                    );
+                }).collect(Collectors.toList());
+        em.close();
+        emf.close();
+
+        return studente;
+    }
 }

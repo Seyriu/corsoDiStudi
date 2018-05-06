@@ -31,13 +31,8 @@ public class StudenteRest {
     @GET
     @Produces("application/json")
     public List<StudenteDTO> loadStudenti() {
-        CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-        try {
-            return cds.getListaStudenti();
-        } catch (CDSException ex) {
-            System.out.println("Si è verificato un errore: " + ex.getLocalizedMessage());
-            return new ArrayList<>();
-        }
+        StudenteDAO sdao = new StudenteDAO();
+        return sdao.loadStudenti();
     }
 
     @Path("/{id}")
