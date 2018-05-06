@@ -26,7 +26,15 @@ public class VotoDAO {
         EntityManager em = emf.createEntityManager();
         TypedQuery<VotoEntity> query = em.createNamedQuery("voto.selectAll", VotoEntity.class);
         List<VotoEntity> list = query.getResultList();
-        List<VotoDTO> voti = list.stream().
+        List<VotoDTO> voti = this.getListaVotiDTOFromListaVotiEntita(list);
+        em.close();
+        emf.close();
+
+        return voti;
+    }
+    
+    public List<VotoDTO> getListaVotiDTOFromListaVotiEntita(List<VotoEntity> listaVEntita) {
+        List<VotoDTO> voti = listaVEntita.stream().
                 map(entity -> {
                     VotoDTO vdto = new VotoDTO(
                             entity.getId(),
@@ -47,9 +55,6 @@ public class VotoDAO {
                     );
                     return vdto;
                 }).collect(Collectors.toList());
-        em.close();
-        emf.close();
-
         return voti;
     }
 
