@@ -104,4 +104,46 @@ public class StudenteDAO {
 
         return studente;
     }
+
+    public void insertStudente(StudenteDTO studente) throws CDSException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("corsodistudi_pu"); // nome dato in persistence.xml
+        EntityManager em = emf.createEntityManager();
+
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+
+            StudenteEntity sEntity = new StudenteEntity();
+            sEntity.setNome(studente.getNome());
+            sEntity.setCognome(studente.getCognome());
+            sEntity.setDataNascita(studente.getDataNascita());
+            sEntity.setCodiceFiscale(studente.getCodiceFiscale());
+            sEntity.setMail(studente.getMail());
+            sEntity.setMatricola(studente.getMatricola());
+            if (studente.getClasse() != null) {
+                sEntity.setClasse(new ClasseEntity(studente.getClasse()));
+            } else {
+                sEntity.setClasse(null);
+            }
+            if (studente.getTassa() != null) {
+                sEntity.setTassa(new TassaEntity(
+                        studente.getTassa().getId(),
+                        studente.getTassa().getIsee(),
+                        studente.getTassa().getCosto()
+                ));
+            } else {
+                sEntity.setTassa(null);
+            }
+            sEntity.setVotiStudente(null);
+
+            em.persist(sEntity);
+            transaction.commit();
+        } catch (Exception ex) {
+            transaction.rollback();
+            throw new CDSException(ex);
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
 }

@@ -54,8 +54,8 @@ public class StudenteRest {
     @Produces("application/json")
     public boolean insertStudente(StudenteDTO studente) {
         try {
-            CorsoDiStudiDAO cds = new CorsoDiStudiDAO();
-            cds.insertStudente(studente);
+            StudenteDAO sdao = new StudenteDAO();
+            sdao.insertStudente(studente);
             return true;
         } catch (CDSException ex) {
             System.out.println("Si e' verificato un errore: " + ex.getLocalizedMessage());

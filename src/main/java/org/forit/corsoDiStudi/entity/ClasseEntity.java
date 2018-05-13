@@ -20,21 +20,20 @@ import javax.persistence.Table;
  *
  * @author UTENTE
  */
-
-    @Entity
-@Table(name="classe")
+@Entity
+@Table(name = "classe")
 @NamedQueries({
-    @NamedQuery(name="Classe.selectAll", query="SELECT n FROM ClasseEntity n ORDER BY n.nome")
+    @NamedQuery(name = "Classe.selectAll", query = "SELECT n FROM ClasseEntity n ORDER BY n.nome")
 
 })
 public class ClasseEntity implements Serializable {
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="ID" , unique=true, nullable=false)
-    private long ID=-1;
-    
-            
-    @Column (name="NOME", unique=false , nullable=true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private long ID = -1;
+
+    @Column(name = "NOME", unique = false, nullable = true)
     private String nome;
 
     public ClasseEntity() {
@@ -93,6 +92,5 @@ public class ClasseEntity implements Serializable {
     public String toString() {
         return "ClasseEntity{" + "ID=" + ID + ", nome=" + nome + '}';
     }
-    
-    
+
 }
